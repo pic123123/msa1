@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "docker:build": "docker build -t msa1 .",
+    "docker:build": "docker build --no-cache --network host -t msa1:1 .",
+    "docker:tag": "docker tag msa1:1 755131291979.dkr.ecr.ap-northeast-2.amazonaws.com/msa1:1",
+    "docker:login": "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 755131291979.dkr.ecr.ap-northeast-2.amazonaws.com",
+    "docker:push": "docker push 755131291979.dkr.ecr.ap-northeast-2.amazonaws.com/msa1:1",
     "start": "cross-env NODE_ENV=prod node index.js",
     "start:dev": "nodemon index.js"
   },
