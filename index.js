@@ -2,7 +2,7 @@ import express from "express";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
+import axios from "axios";
 const app = express();
 const port = 7001;
 const allowlist = [
@@ -35,6 +35,14 @@ app.get("/", function (req, res) {
 // AWS Health-Check
 app.get("/health-check", (req, res) => {
   res.send("Hello World! nodejs health-check");
+});
+
+app.get("/get-polular-movies", async (req, res) => {
+  const { data: popularResult } = await axios.get(
+    "https://movies-api.nomadcoders.workers.dev/popular"
+  );
+  console.log(popularResult);
+  res.status(200).send({ success: true, result: popularResult });
 });
 
 app.listen(port, () => {
